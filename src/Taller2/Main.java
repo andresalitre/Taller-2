@@ -11,7 +11,7 @@ import java.util.Scanner;
 public class Main {
 		private static List<AltoMando> listaAltoMando = new ArrayList<>(); //Listas para objetos
 		private static List<LiderGym> listaLiderGym = new ArrayList<>();
-		private static List<Pokemon> listaPokemon = new ArrayList<>();
+		private static List<Pokemon> Pokedex = new ArrayList<>();
 		
 	public static void main(String[] args) throws FileNotFoundException {
 		establecerPokedex("Pokedex.txt");
@@ -28,16 +28,17 @@ public class Main {
 			 String linea = lector.nextLine();
 			 String[] partes = linea.split(";");
 			 AltoMando persona = new AltoMando(Integer.valueOf(partes[0]), partes[1]);
-			 listaAltoMando.add(persona);
-			 for (int i = 2; i < 8; i++) {
-				 for (Pokemon pokemon : listaPokemon) {
-					 if (partes[i].equals(pokemon.getNombre())) {
-						 persona.obtenerPokemon(pokemon);
+			 listaAltoMando.add(persona); // Por cada linea creamos un alto mando
+			 for (int i = 2; i < 8; i++) { //Se revisa cada pokemon tipo (String de la linea)
+				 for (Pokemon pokemon : Pokedex) { //Se revisa cada Nombre de los pokemon en la pokedex
+					 if (partes[i].equals(pokemon.getNombre())) { //Se revisa si es igual el pokemon de la pokedex con el del alto mando
+						 persona.obtenerPokemon(pokemon); //Si son iguales se le añade
 					 }
 				 }
 			 }
 		}
 	}
+	
 	
 	public static void establecerPokedex(String archivo) throws FileNotFoundException {
 		Scanner lector = new Scanner(new File(archivo));
@@ -47,7 +48,7 @@ public class Main {
 			 Pokemon poke = new Pokemon(partes[0],partes[1], Double.valueOf(partes[2]),
 						Integer.valueOf(partes[3]),Integer.valueOf(partes[4]),Integer.valueOf(partes[5]),
 						Integer.valueOf(partes[6]),Integer.valueOf(partes[7]),Integer.valueOf(partes[8]), partes[9]);
-			 listaPokemon.add(poke);
+			 Pokedex.add(poke);
 			 
 		}
 	}
@@ -60,7 +61,7 @@ public class Main {
 			 LiderGym persona = new LiderGym(Integer.valueOf(partes[0]), partes[1], partes[2]);
 			 listaLiderGym.add(persona);
 			 for (int i = 3; i < 4 + Integer.valueOf(partes[3]); i++) {
-				 for (Pokemon pokemon : listaPokemon) {
+				 for (Pokemon pokemon : Pokedex) {
 					 if (partes[i].equals(pokemon.getNombre())) {
 						 persona.obtenerPokemon(pokemon);
 					 }
