@@ -1,5 +1,8 @@
 package Taller2;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Pokemon {
 	// Magikarp;Lago;0.15;20;10;55;15;20;80;Agua
 	
@@ -27,6 +30,47 @@ public class Pokemon {
 		this.spd = spd;
 		this.tipo = tipo;
 	}
+
+	public String getNombre() {
+		return nombre;
+	}
+
+	public String getHabitad() {
+		return habitad;
+	}
+
+	public double getAparicion() {
+		return aparicion;
+	}
+
+	public int getHp() {
+		return hp;
+	}
+
+	public int getAtk() {
+		return atk;
+	}
+
+	public int getSpAtk() {
+		return spAtk;
+	}
+
+	public int getDef() {
+		return def;
+	}
+
+	public int getSpDef() {
+		return spDef;
+	}
+
+	public int getSpd() {
+		return spd;
+	}
+
+	public String getTipo() {
+		return tipo;
+	}
+	
 	
 	
 
