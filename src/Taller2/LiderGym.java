@@ -7,7 +7,6 @@ public class LiderGym {
 	private int orden;
 	private String nombre;
 	private String estado;
-	private int cantPokemons;
 	private List<Pokemon> equipo;
 	
 	public LiderGym(int orden, String nombre, String estado) {
@@ -18,7 +17,7 @@ public class LiderGym {
 	
 	public void team() {
 		for (Pokemon p : equipo) {
-			System.out.println(p.getNombre());
+			System.out.println("-"+p.getNombre());
 		}
 	}
 	

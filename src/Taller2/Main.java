@@ -18,15 +18,6 @@ public class Main {
 		establecerAltoMando("Alto Mando.txt");
 		establecerLideres("Gimnasios.txt");
 		
-		for (int i = 0; i < listaAltoMando.size(); i++) {
-			System.out.println(listaAltoMando.get(i).getNombre());
-			listaAltoMando.get(i).team();
-		}
-		
-		for (int i = 0; i < listaLiderGym.size(); i++) {
-			System.out.println(listaLiderGym.get(i).getNombre());
-			listaLiderGym.get(i).team();
-		}
 		
 		
 	}
@@ -61,7 +52,6 @@ public class Main {
 		}
 	}
 	
-	
 	public static void establecerLideres(String archivo) throws FileNotFoundException {
 		Scanner lector = new Scanner(new File(archivo));
 		while (lector.hasNextLine()) {
@@ -69,15 +59,15 @@ public class Main {
 			 String[] partes = linea.split(";");
 			 LiderGym persona = new LiderGym(Integer.valueOf(partes[0]), partes[1], partes[2]);
 			 listaLiderGym.add(persona);
-					 
+			 for (int i = 3; i < 4 + Integer.valueOf(partes[3]); i++) {
+				 for (Pokemon pokemon : listaPokemon) {
+					 if (partes[i].equals(pokemon.getNombre())) {
+						 persona.obtenerPokemon(pokemon);
+					 }
+				 }
+			 }
 		}
 	}
-	
-	public static void establecerEquipos() {
-		
-	}
-	
-
 
 }
 
