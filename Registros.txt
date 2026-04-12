@@ -1,4 +1,4 @@
 andres;none
 Excadrill;Vivo
 Tyranitar;Vivo
-MegaBlaziken;Debilitado
+MegaBlaziken;Vivo

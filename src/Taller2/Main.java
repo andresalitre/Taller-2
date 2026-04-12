@@ -13,6 +13,7 @@ public class Main {
 		private static List<AltoMando> listaAltoMando = new ArrayList<>(); //Listas para objetos
 		private static List<LiderGym> listaLiderGym = new ArrayList<>();
 		private static List<Pokemon> Pokedex = new ArrayList<>();
+		private static List<Habitat> Habitats = new ArrayList<>();
 		private static Jugador jugador = new Jugador("","");
 		static Boolean ejecutar = true;
 		static Boolean cargaCompleta = false;
@@ -21,8 +22,12 @@ public class Main {
 		establecerPokedex("Pokedex.txt");
 		establecerAltoMando("Alto Mando.txt");
 		establecerLideres("Gimnasios.txt");
+		establecerZonas("Habitats.txt");
 		
-		
+		int i = 0;
+		for (Habitat p : Habitats) {
+			p.habitantes();
+		}
 		
 		menuInicial();
 		
@@ -77,7 +82,6 @@ public class Main {
 				jugador.team();
 				break;
 			case "2":
-				capturar();
 				break;
 			case "3":
 				pc();
@@ -152,37 +156,51 @@ public class Main {
 		} lector.close();
 	}
 	
-	public static void capturar() throws FileNotFoundException {
-		Scanner lector = new Scanner(new File("Habitats.txt"));
-		Scanner sc = new Scanner(System.in);
-		List habitats = new ArrayList<>();
+	public static void establecerZonas(String archivo) throws FileNotFoundException {
+		Scanner lector = new Scanner(new File(archivo));
 		while (lector.hasNextLine()) {
-			String linea = lector.nextLine();
-			habitats.add(linea);
+			 String linea = lector.nextLine();
+			 Habitat h = new Habitat(linea);
+			 Habitats.add(h);
+			 for (Pokemon p : Pokedex) {
+				 if (linea.equals(p.getHabitad())) {
+					 h.agregarPokemon(p);
+				 }
+			 }
 		}
-		String opcion;
-		do {
-			System.out.println("¿Donde deseas ir a explorar?\n\nZonas disponibles:");
-			int i = 0;
-			for(i = 0; i < habitats.size(); i++) {
-				System.out.println(i+1+") " + habitats.get(i));
-			} System.out.println(i+1+") Volver al menu.");
-			opcion = sc.nextLine();
-			
-			} while (Integer.valueOf(opcion) > 0 || Integer.valueOf(opcion) < habitats.size());
-	}
-	
-	public static void zonas() {
-		
 	}
 	
 	public static void pc() {
 		
 	}
 	
-	public static void curar() {
+	public static void capturar() {
+		Scanner sc = new Scanner(System.in);
+		String opcion;
+		do {
+			opcion = sc.nextLine();
+			System.out.println("Donde deseas ir a explorar?\r\n"
+				+ "\r\n"
+				+ "Zonas disponibles:\r\n"
+				+ "\r\n"
+				+ "1) Lago\r\n"
+				+ "2) Cueva\r\n"
+				+ "3) Montaña\r\n"
+				+ "4) Bosque\r\n"
+				+ "5) Prado\r\n"
+				+ "6) Mar\r\n"
+				+ "7) Volver al menu.");	
+			switch (opcion) {
+			case "1":
+				
+			}
+			
+		} while (!opcion.equals("7"));
+	}
+	
+	public static void curar() { //se revisan los objetos pokemonjugador como p, desde el equipo del jugador
 		for (PokemonJugador p : jugador.getEquipo()) {
-			if (p.getEstado().equals("Debilitado")) {
+			if (p.getEstado().equals("Debilitado")) { //si su estado es muerto se hace vivo
 				p.setEstado("Vivo");
 			}
 		}
@@ -191,10 +209,10 @@ public class Main {
 	public static void guardar() throws IOException {
 		try (BufferedWriter reescritor = new BufferedWriter(new FileWriter("Registros.txt"))) {
 			reescritor.write(jugador.getNombre()+";"+jugador.getMedallas());
-			reescritor.newLine();
+			reescritor.newLine(); //escribir el nombre;medellas
 			for (PokemonJugador p : jugador.getEquipo()) {
 				reescritor.write(p.getPokemon().getNombre()+";"+p.getEstado());
-				reescritor.newLine();
+				reescritor.newLine(); //se recorren todo el equipo y se escribe pokemon;estado
 			}
 		}
 	}
@@ -212,6 +230,7 @@ public class Main {
 	 
 	 public static void cargarPartida() throws IOException {
 		 Scanner lector = new Scanner(new File("Registros.txt"));
+		 
 		 int primeraLinea = 0;
 		 while (lector.hasNextLine()) {
 			 String linea = lector.nextLine();
