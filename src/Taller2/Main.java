@@ -24,10 +24,6 @@ public class Main {
 		establecerLideres("Gimnasios.txt");
 		establecerZonas("Habitats.txt");
 		
-		int i = 0;
-		for (Habitat p : Habitats) {
-			p.habitantes();
-		}
 		
 		menuInicial();
 		
@@ -63,11 +59,10 @@ public class Main {
 	}
 	
 	public static void menuPartida() throws IOException {
-		System.out.println("\nBienvenido " + jugador.getNombre()+ "\n");
 		Scanner sc = new Scanner(System.in);
 		String opcion;
 		do {
-			System.out.print("1) Revisar equipo.\r\n"
+			System.out.print("\nBienvenido " + jugador.getNombre()+ "\n\n"+"1) Revisar equipo.\r\n"
 					+ "2) Salir a capturar.\r\n"
 					+ "3) Acceso al PC (cambiar Pokémon del equipo).\r\n"
 					+ "4) Retar un gimnasio.\r\n"
@@ -82,6 +77,7 @@ public class Main {
 				jugador.team();
 				break;
 			case "2":
+				elegirZona();
 				break;
 			case "3":
 				pc();
@@ -174,12 +170,11 @@ public class Main {
 		
 	}
 	
-	public static void capturar() {
+	public static void elegirZona() {
 		Scanner sc = new Scanner(System.in);
 		String opcion;
 		do {
-			opcion = sc.nextLine();
-			System.out.println("Donde deseas ir a explorar?\r\n"
+			System.out.print("\nDonde deseas ir a explorar?\r\n"
 				+ "\r\n"
 				+ "Zonas disponibles:\r\n"
 				+ "\r\n"
@@ -189,19 +184,66 @@ public class Main {
 				+ "4) Bosque\r\n"
 				+ "5) Prado\r\n"
 				+ "6) Mar\r\n"
-				+ "7) Volver al menu.");	
+				+ "7) Volver al menu.\n\nElección: ");	
+			opcion = sc.nextLine();
 			switch (opcion) {
 			case "1":
-				
+				capturar(Habitats.get(0));
+				return;
+			case "2":
+				capturar(Habitats.get(1));
+				return;
+			case "3":
+				capturar(Habitats.get(2));
+				return;
+			case "4":
+				capturar(Habitats.get(3));
+				return;
+			case "5":
+				capturar(Habitats.get(4));
+				return;
+			case "6":
+				capturar(Habitats.get(5));	
+				return;
+			case "7":
+				System.out.println();
+				break;
+			default:
+				System.out.println("Elección incorrecta, vuelve a intentarlo.");
 			}
 			
 		} while (!opcion.equals("7"));
+	}
+	
+	public static void capturar(Habitat habitat) {
+		Pokemon p = habitat.obtenerRandom();
+		Scanner sc = new Scanner(System.in);
+		System.out.println("\nOh!! Ha aparecido un increible " +p.getNombre()+"\n\nQue deseas hacer?");
+		String opcion;
+		do {
+			System.out.print("\n1) Capturar\n2) Huir\n\nOpción: ");
+			opcion = sc.nextLine();
+			switch (opcion) {
+			case "1":
+				jugador.obtenerPokemon(p,"Vivo");
+				System.out.println("\n"+p.getNombre()+" capturado con exito!!\n");
+				System.out.println(p.getNombre()+" ha sido agregado a tu equipo!\n");
+				break;
+			case "2":
+				System.out.println("\nYou gotta away safely.\n");
+				break;
+			}
+			
+		} while (!opcion.equals("1") && !opcion.equals("2"));
+		
+		
 	}
 	
 	public static void curar() { //se revisan los objetos pokemonjugador como p, desde el equipo del jugador
 		for (PokemonJugador p : jugador.getEquipo()) {
 			if (p.getEstado().equals("Debilitado")) { //si su estado es muerto se hace vivo
 				p.setEstado("Vivo");
+				System.out.println("\nTodos los pokemons fueron curados");
 			}
 		}
 	}
@@ -217,7 +259,7 @@ public class Main {
 		}
 	}
 	
-	 public static void partidaNueva() throws IOException {
+	public static void partidaNueva() throws IOException {
 		 Scanner sc = new Scanner(System.in);
 			System.out.print("\nIngrese su apodo de jugador: ");
 			String apodo = sc.nextLine();
@@ -228,7 +270,7 @@ public class Main {
 		 }
 	 }
 	 
-	 public static void cargarPartida() throws IOException {
+	public static void cargarPartida() throws IOException {
 		 Scanner lector = new Scanner(new File("Registros.txt"));
 		 
 		 int primeraLinea = 0;

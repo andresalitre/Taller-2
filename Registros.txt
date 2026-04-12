@@ -1,4 +1,7 @@
-andres;none
+matias;none
+Seismitoad;Vivo
+Cloyster;Vivo
+Hydrapple;Vivo
+Froslass;Vivo
 Excadrill;Vivo
-Tyranitar;Vivo
-MegaBlaziken;Vivo
+Garganacl;Vivo

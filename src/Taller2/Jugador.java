@@ -15,12 +15,12 @@ public class Jugador {
 	}
 	
 	public void team() {
-		if (equipo.size() == 0) {System.out.println("\nNo tiene ningun pokemon\n"); return;}
+		if (equipo.size() == 0) {System.out.println("\nNo tiene ningun pokemon"); return;}
 		System.out.println();
-		for (PokemonJugador pj : equipo) {
-			Pokemon p = pj.getPokemon();
+		for (int i = 0; i<6; i++) {
+			Pokemon p = equipo.get(i).getPokemon();
 			System.out.println("-"+p.getNombre()
-			+ " | " + p.getTipo() + " | " + p.sumaStats() + " | " + pj.getEstado());
+			+ " | " + p.getTipo() + " | " + p.sumaStats() + " | " + equipo.get(i).getEstado());
 		} System.out.println();
 	}
 	
