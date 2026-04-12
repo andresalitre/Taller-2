@@ -1,1 +1,4 @@
-andres;0
+andres;none
+Excadrill;Vivo
+Tyranitar;Vivo
+MegaBlaziken;Debilitado

@@ -72,6 +72,8 @@ public class Pokemon {
 	}
 	
 	
-	
+	public int sumaStats() {
+		return hp + atk + spAtk + def + spDef + spd;
+	}
 
 }
