@@ -24,9 +24,7 @@ public class Main {
 		establecerLideres("Gimnasios.txt");
 		establecerZonas("Habitats.txt");
 		
-		
 		menuInicial();
-		
 	}
 	
 	public static void menuInicial() throws IOException {
@@ -82,6 +80,10 @@ public class Main {
 				break;
 			case "3":
 				pc();
+				break;
+			case "4":
+				break;
+			case "5":
 				break;
 			case "6":
 				curar();
@@ -204,7 +206,7 @@ public class Main {
 		System.out.println(jugador.getEquipo().get(sacar).getPokemon().getNombre() + 
 		" salio del equipo por " + jugador.getEquipo().get(meter).getPokemon().getNombre());
 		jugador.cambiarPokes(meter, sacar);
-	}
+	} // se usa validar rango para elegir un poke del equipo y uno del pc, luego se llama a cambiarPoke en Jugador para intercambialos
 	
 	public static int validarRango(int minimo,int Maximo) {
 	    Scanner sc = new Scanner(System.in);
@@ -278,12 +280,18 @@ public class Main {
 			opcion = sc.nextLine();
 			switch (opcion) {
 			case "1":
+				for (PokemonJugador q : jugador.getEquipo()) {
+					if (p.equals(q.getPokemon())) {
+						System.out.println("\nYa tienes este pokémon.");
+						return;
+					}
+				}
 				jugador.obtenerPokemon(p,"Vivo");
 				System.out.println("\n"+p.getNombre()+" capturado con exito!!\n");
-				System.out.println(p.getNombre()+" ha sido agregado a tu equipo!\n");
+				System.out.println(p.getNombre()+" ha sido agregado a tu equipo!");
 				break;
 			case "2":
-				System.out.println("\nYou gotta away safely.\n");
+				System.out.println("\nYou gotta away safely.");
 				break;
 			}
 			

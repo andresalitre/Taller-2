@@ -14,7 +14,7 @@ public class Jugador {
 		this.equipo = new ArrayList<>();
 	}
 	
-	public void team() {
+	public void team() { //Printea el equipo del jugador, con lo que se pide, stats, nombre tipo, tambien agregue estado
 		if (equipo.size() == 0) {System.out.println("\nNo tiene ningun pokemon"); return;}
 		System.out.println();
 		int j = 0;
@@ -28,7 +28,7 @@ public class Jugador {
 		} System.out.println();
 	}
 	
-	public void obtenerPokemon(Pokemon p,String estado) {
+	public void obtenerPokemon(Pokemon p,String estado) { //agrega un poke al jugador
 		equipo.add(new PokemonJugador(p, estado));
 	}
 	
@@ -56,6 +56,6 @@ public class Jugador {
 		PokemonJugador aux = equipo.get(sale);
 		equipo.set(sale, equipo.get(entra));
 		equipo.set(entra, aux);
-	}
+	} //Se crea un auxiliar para guardar el que sale, se cambian las posiciones y luego se agrega el auxiliar
 
 }
