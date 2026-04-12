@@ -17,10 +17,14 @@ public class Jugador {
 	public void team() {
 		if (equipo.size() == 0) {System.out.println("\nNo tiene ningun pokemon"); return;}
 		System.out.println();
-		for (int i = 0; i<6; i++) {
+		int j = 0;
+		for (int i = 0; i < equipo.size(); i++) {
+			if (j < 6) {
 			Pokemon p = equipo.get(i).getPokemon();
 			System.out.println("-"+p.getNombre()
 			+ " | " + p.getTipo() + " | " + p.sumaStats() + " | " + equipo.get(i).getEstado());
+			j++;
+			}
 		} System.out.println();
 	}
 	
@@ -46,6 +50,12 @@ public class Jugador {
 	
 	public List<PokemonJugador> getEquipo() {
 		return equipo;
+	}
+	
+	public void cambiarPokes(int entra,int sale) { 
+		PokemonJugador aux = equipo.get(sale);
+		equipo.set(sale, equipo.get(entra));
+		equipo.set(entra, aux);
 	}
 
 }

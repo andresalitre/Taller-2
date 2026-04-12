@@ -1,7 +1,10 @@
 matias;none
 Seismitoad;Vivo
-Cloyster;Vivo
-Hydrapple;Vivo
+Tentacruel;Vivo
 Froslass;Vivo
 Excadrill;Vivo
 Garganacl;Vivo
+Psyduck;Vivo
+Whiscash;Vivo
+Trevenant;Vivo
+Hydrapple;Vivo

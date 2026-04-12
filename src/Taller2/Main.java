@@ -59,10 +59,11 @@ public class Main {
 	}
 	
 	public static void menuPartida() throws IOException {
+		System.out.print("\nBienvenido " + jugador.getNombre());
 		Scanner sc = new Scanner(System.in);
 		String opcion;
 		do {
-			System.out.print("\nBienvenido " + jugador.getNombre()+ "\n\n"+"1) Revisar equipo.\r\n"
+			System.out.print("\n" + jugador.getNombre()+", que deseas hacer?"+ "\n\n"+"1) Revisar equipo.\r\n"
 					+ "2) Salir a capturar.\r\n"
 					+ "3) Acceso al PC (cambiar Pokémon del equipo).\r\n"
 					+ "4) Retar un gimnasio.\r\n"
@@ -74,7 +75,7 @@ public class Main {
 			
 			switch (opcion) {
 			case "1":
-				jugador.team();
+				jugador.team(); 
 				break;
 			case "2":
 				elegirZona();
@@ -99,8 +100,7 @@ public class Main {
 				break;
 			}
 			
-		} while (!opcion.equals("8")); sc.close();
-	
+		} while (!opcion.equals("8"));
 	}
 	
 	
@@ -118,8 +118,8 @@ public class Main {
 					 }
 				 }
 			 }
-		} lector.close();
-	}
+		}
+	} //se crean todos los altosMandos tipo objetos y se guardan una lista
 	
 	public static void establecerPokedex(String archivo) throws FileNotFoundException {
 		Scanner lector = new Scanner(new File(archivo));
@@ -131,8 +131,8 @@ public class Main {
 						Integer.valueOf(partes[6]),Integer.valueOf(partes[7]),Integer.valueOf(partes[8]), partes[9]);
 			 Pokedex.add(poke);
 			 //Se añaden todos los pokemon del archivo a la pokedex
-		} lector.close();
-	}
+		} 
+	} //se crean los pokémon y luego se guardan en una lista
 	
 	public static void establecerLideres(String archivo) throws FileNotFoundException {
 		Scanner lector = new Scanner(new File(archivo));
@@ -149,26 +149,80 @@ public class Main {
 					 }
 				 }
 			 }
-		} lector.close();
-	}
+		} 
+	} //se crean todos los lideres tipo objetos y se guardan una lista
 	
 	public static void establecerZonas(String archivo) throws FileNotFoundException {
 		Scanner lector = new Scanner(new File(archivo));
-		while (lector.hasNextLine()) {
-			 String linea = lector.nextLine();
-			 Habitat h = new Habitat(linea);
-			 Habitats.add(h);
-			 for (Pokemon p : Pokedex) {
-				 if (linea.equals(p.getHabitad())) {
-					 h.agregarPokemon(p);
+			while (lector.hasNextLine()) {
+				String linea = lector.nextLine();
+				Habitat h = new Habitat(linea);
+				Habitats.add(h);
+				for (Pokemon p : Pokedex) {
+					if (linea.equals(p.getHabitad())) {
+						h.agregarPokemon(p);
 				 }
-			 }
-		}
-	}
+			 } 
+		} 
+	} //se crean todos los habitats con sus pokémon correspondientes en una lista
 	
 	public static void pc() {
+		Scanner sc = new Scanner(System.in);
+		int i = 1;
+		for (PokemonJugador p : jugador.getEquipo()) {
+			Pokemon mostrar = p.getPokemon();
+			System.out.println(i+") "+mostrar.getNombre());
+			i++;
+		}
+		String opcion;
+		do {
+			System.out.print("\n1) Cambiar pokémon.\n2) Salir.\n\nOpción: ");
+			opcion = sc.nextLine();
+			switch (opcion) {
+			case "1":
+				if (jugador.getEquipo().size() < 6) { 
+					System.out.println("\nNo tienes más de 6 pokémon,"
+							+ "\nno puedes cambiar el equipo");
+					break;
+				}
+				cambiarPokemon();
+				break;
+			case "2":
+				System.out.println("\nVolviendo al menu...\n");
+				break;
+			}
+			
+		} while (!opcion.equals("1") && !opcion.equals("2")); 
 		
+	} // se muestran todos los pokémon del jugador y se le pregunta que si va a cambiar el equipo
+	
+	public static void cambiarPokemon() {
+		System.out.print("Elige quien va a salir del equipo: ");
+		int sacar = validarRango(1, 6) - 1;
+		System.out.print("Elige quien va a entrar al equipo: ");
+		int meter = validarRango(7, jugador.getEquipo().size()) - 1;
+		System.out.println(jugador.getEquipo().get(sacar).getPokemon().getNombre() + 
+		" salio del equipo por " + jugador.getEquipo().get(meter).getPokemon().getNombre());
+		jugador.cambiarPokes(meter, sacar);
 	}
+	
+	public static int validarRango(int minimo,int Maximo) {
+	    Scanner sc = new Scanner(System.in);
+	    int numero = -1;
+	    while (true) {
+	        if (sc.hasNextInt()) {
+	            numero = sc.nextInt();
+	            if (numero >= minimo && numero <= Maximo) {
+	                return numero;
+	            } else {
+	                System.out.print("Pokémon fuera de rango: ");
+	            }
+	        } else {
+	            System.out.print("Debes ingresar un número: ");
+	            sc.next();
+	        } 
+	    } 
+	} //validar que se elija bien el numero entre el rango que se le da a la funcion
 	
 	public static void elegirZona() {
 		Scanner sc = new Scanner(System.in);
@@ -206,14 +260,13 @@ public class Main {
 				capturar(Habitats.get(5));	
 				return;
 			case "7":
-				System.out.println();
 				break;
 			default:
 				System.out.println("Elección incorrecta, vuelve a intentarlo.");
 			}
 			
 		} while (!opcion.equals("7"));
-	}
+	} //un switch para elegir la zona, y segun la que se elegi, se llama a capturar()
 	
 	public static void capturar(Habitat habitat) {
 		Pokemon p = habitat.obtenerRandom();
@@ -237,16 +290,16 @@ public class Main {
 		} while (!opcion.equals("1") && !opcion.equals("2"));
 		
 		
-	}
+	} //se elegi un pokemon random y pregunta si lo que quieres capturar o no, se añade a la lista de pokemon del jugador
 	
-	public static void curar() { //se revisan los objetos pokemonjugador como p, desde el equipo del jugador
+	public static void curar() {
 		for (PokemonJugador p : jugador.getEquipo()) {
 			if (p.getEstado().equals("Debilitado")) { //si su estado es muerto se hace vivo
 				p.setEstado("Vivo");
 				System.out.println("\nTodos los pokemons fueron curados");
 			}
 		}
-	}
+	} //se revisan los objetos pokemonjugador como p, desde el equipo del jugador
 	
 	public static void guardar() throws IOException {
 		try (BufferedWriter reescritor = new BufferedWriter(new FileWriter("Registros.txt"))) {
@@ -257,7 +310,7 @@ public class Main {
 				reescritor.newLine(); //se recorren todo el equipo y se escribe pokemon;estado
 			}
 		}
-	}
+	} //reescribe el archivo con el nombre, medallas y pokemon del jugador, junto al estado
 	
 	public static void partidaNueva() throws IOException {
 		 Scanner sc = new Scanner(System.in);
@@ -268,7 +321,7 @@ public class Main {
 			 jugador.setNombre(apodo);
 			 jugador.setMedallas("none");
 		 }
-	 }
+	 } //se pregunta nuevo apodo y se reescribe el archivo, queda: ("apodo";"none")
 	 
 	public static void cargarPartida() throws IOException {
 		 Scanner lector = new Scanner(new File("Registros.txt"));
@@ -291,6 +344,6 @@ public class Main {
 				}
 			}
 		}
-	}
+	} //se cargan los datos de registros.txt, se sobresciben los datos del objeto "jugador"
 }
 
