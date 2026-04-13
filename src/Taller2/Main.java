@@ -82,6 +82,7 @@ public class Main {
 				pc();
 				break;
 			case "4":
+				printGyms();
 				break;
 			case "5":
 				break;
@@ -105,6 +106,13 @@ public class Main {
 		} while (!opcion.equals("8"));
 	}
 	
+	public static void printGyms() {
+		System.out.println("\nA cual Lider deseas retar??\r\n");
+		for (LiderGym l : listaLiderGym) {
+			System.out.println(l.getOrden()+") " + l.getNombre() + " - " + "Estado: " + l.getEstado());
+		}
+		System.out.println("9) Volver al menu.\n\nSeleccionar opción: ");		
+	}
 	
 	public static void establecerAltoMando(String archivo) throws FileNotFoundException {
 		Scanner lector = new Scanner(new File(archivo));
@@ -298,7 +306,7 @@ public class Main {
 		} while (!opcion.equals("1") && !opcion.equals("2"));
 		
 		
-	} //se elegi un pokemon random y pregunta si lo que quieres capturar o no, se añade a la lista de pokemon del jugador
+	} //se elegi un pokemon random y pregunta si lo que quieres capturar o no, se añade a la lista de pokemon del jugador, no se pueden capturar repetidos
 	
 	public static void curar() {
 		for (PokemonJugador p : jugador.getEquipo()) {

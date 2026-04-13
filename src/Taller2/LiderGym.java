@@ -12,6 +12,7 @@ public class LiderGym {
 	public LiderGym(int orden, String nombre, String estado) {
 		this.orden = orden;
 		this.nombre = nombre;
+		this.estado = estado;
 		this.equipo = new ArrayList<>();
 	}
 	
@@ -27,6 +28,14 @@ public class LiderGym {
 	
 	public String getNombre() {
 		return nombre;
+	}
+	
+	public String getEstado() {
+		return estado;
+	}
+	
+	public int getOrden() {
+		return orden;
 	}
 
 }

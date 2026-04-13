@@ -22,7 +22,7 @@ public class Jugador {
 			if (j < 6) {
 			Pokemon p = equipo.get(i).getPokemon();
 			System.out.println("-"+p.getNombre()
-			+ " | " + p.getTipo() + " | " + p.sumaStats() + " | " + equipo.get(i).getEstado());
+			+ "|" + p.getTipo() + "|Stats: " + p.sumaStats() + "|" + equipo.get(i).getEstado());
 			j++;
 			}
 		} System.out.println();
