@@ -54,7 +54,7 @@ public class Main {
 			
 		} while (ejecutar); sc.close();
 		
-	}
+	} //menu donde se carga partida, se crea una nueva o te vas
 	
 	public static void menuPartida() throws IOException {
 		System.out.print("\nBienvenido " + jugador.getNombre());
@@ -83,6 +83,7 @@ public class Main {
 				break;
 			case "4":
 				printGyms();
+				pelearGym();
 				break;
 			case "5":
 				break;
@@ -106,13 +107,17 @@ public class Main {
 		} while (!opcion.equals("8"));
 	}
 	
+	public static void pelearGym() {
+		
+	}
+	
 	public static void printGyms() {
 		System.out.println("\nA cual Lider deseas retar??\r\n");
 		for (LiderGym l : listaLiderGym) {
 			System.out.println(l.getOrden()+") " + l.getNombre() + " - " + "Estado: " + l.getEstado());
 		}
 		System.out.println("9) Volver al menu.\n\nSeleccionar opción: ");		
-	}
+	} //printea los lideres en orden con su estado
 	
 	public static void establecerAltoMando(String archivo) throws FileNotFoundException {
 		Scanner lector = new Scanner(new File(archivo));
