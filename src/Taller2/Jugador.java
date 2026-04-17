@@ -3,6 +3,7 @@ package Taller2;
 import java.util.ArrayList;
 import java.util.List;
 
+
 public class Jugador {
 	private String nombre;
 	private String medallas;
@@ -26,6 +27,18 @@ public class Jugador {
 			j++;
 			}
 		} System.out.println();
+	}
+	
+	public List<Pokemon> setearTeam() {
+		List<Pokemon> equipoPelea = new ArrayList<>();
+		int j = 0;
+		for (int i = 0; j < equipo.size(); i++) {
+			if (j < 6) {
+				Pokemon p = equipo.get(i).getPokemon();
+				equipoPelea.add(p);
+				j++;
+			}
+		} return equipoPelea;
 	}
 	
 	public void obtenerPokemon(Pokemon p,String estado) { //agrega un poke al jugador

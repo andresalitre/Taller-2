@@ -83,7 +83,6 @@ public class Main {
 				break;
 			case "4":
 				printGyms();
-				pelearGym();
 				break;
 			case "5":
 				break;
@@ -107,7 +106,26 @@ public class Main {
 		} while (!opcion.equals("8"));
 	}
 	
-	public static void pelearGym() {
+	
+	public static void batallaLider(LiderGym rival) {
+		List<Pokemon> equipoJugador = jugador.setearTeam();
+		List<Pokemon> equipoRival = rival.setearTeam();
+			
+		}
+	
+	public static void elegirGym(int opcion) {
+		if(opcion == 0) {
+			System.out.println("Desafia a EmmaLaArdillaRabiosa!!!11!\n");
+			batallaLider(listaLiderGym.get(opcion));
+			return;
+		} 
+		if (listaLiderGym.get(opcion-1).getEstado().equals("Sin derrotar")) {
+			System.out.println("Primero debes derrotar a " + listaLiderGym.get(opcion-1).getNombre()
+					+ "\npara enfrentarte a " + listaLiderGym.get(opcion).getNombre());
+		} else {
+			System.out.println("Ponte vio contra " + listaLiderGym.get(opcion).getNombre()+"\n");
+			batallaLider(listaLiderGym.get(opcion));
+		}
 		
 	}
 	
@@ -116,7 +134,30 @@ public class Main {
 		for (LiderGym l : listaLiderGym) {
 			System.out.println(l.getOrden()+") " + l.getNombre() + " - " + "Estado: " + l.getEstado());
 		}
-		System.out.println("9) Volver al menu.\n\nSeleccionar opción: ");		
+		System.out.println("9) Volver al menu.\n");
+		Scanner sc = new Scanner(System.in);
+		String opcion;
+		do {
+			System.out.print("Seleccionar opción: ");
+			opcion = sc.nextLine();
+			switch(opcion) {
+			case "1": elegirGym(0); break;
+			case "2": elegirGym(1); break;
+			case "3": elegirGym(2); break;
+			case "4": elegirGym(3); break;
+			case "5": elegirGym(4); break;
+			case "6": elegirGym(5); break;
+			case "7": elegirGym(6); break;
+			case "8": elegirGym(7); break;
+			case "9":
+				System.out.println("Volviendo...");
+				break;
+			default:
+				break;
+			
+			}
+		} while (!opcion.equals("9"));
+		
 	} //printea los lideres en orden con su estado
 	
 	public static void establecerAltoMando(String archivo) throws FileNotFoundException {
