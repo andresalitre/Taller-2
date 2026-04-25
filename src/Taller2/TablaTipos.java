@@ -1,5 +1,5 @@
 package Taller2;
-
+import java.util.ArrayList;
 public class TablaTipos {
     
     // Matriz de efectividad
@@ -24,4 +24,22 @@ public class TablaTipos {
         {  1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 0.5, 1.0, 1.0, 1.0, 2.0, 1.0, 1.0, 2.0, 1.0, 1.0, 0.5, 0.5 }, // SINIESTRO
         {  1.0, 0.5, 1.0, 1.0, 1.0, 1.0, 2.0, 0.5, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 2.0, 0.5, 2.0, 1.0 }  // HADA
     };
+    
+    public double MultiplicadorDeAtaque(String[] tipo) {
+    	String tipoAtacante = tipo[0]; //redundante pero favorece para entender qué está pasando
+    	String tipoAtacado = tipo[1];
+    	String[] tipos = {"Normal", "Fuego", "Agua","Planta","Electrico",
+    					  "Hielo","Lucha","Veneno","Tierra","Volador",
+    					  "Psiquico","Bicho", "Roca", "Fantasma", "Dragon", 
+    					  "Acero","Siniestro","Hada"};
+    	ArrayList<String> tiposArray = new ArrayList<>(); //para no hacer recorrer la lista y sólo entregar la primera ocurrencia de la lista única de tipos
+    	for (String tipoi : tipos) {					  // y que en sí sea más sencillo acceder a los tipos
+    	    tiposArray.add(tipoi);
+    	}
+    	int atacante = tiposArray.indexOf(tipoAtacante);
+    	int defensor = tiposArray.indexOf(tipoAtacado);
+    	
+    	return EFECTIVIDAD[atacante][defensor];
+    }
+    
 }

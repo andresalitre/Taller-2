@@ -10,30 +10,30 @@ import java.util.List;
 import java.util.Scanner;
 
 public class Main {
-		private static List<AltoMando> listaAltoMando = new ArrayList<>(); //Listas para objetos
-		private static List<LiderGym> listaLiderGym = new ArrayList<>();
-		private static List<Pokemon> Pokedex = new ArrayList<>();
-		private static List<Habitat> Habitats = new ArrayList<>();
-		private static Jugador jugador = new Jugador("","");
-		static Boolean ejecutar = true;
-		static Boolean cargaCompleta = false;
-		
+	private static List<AltoMando> listaAltoMando = new ArrayList<>(); // Listas para objetos
+	private static List<LiderGym> listaLiderGym = new ArrayList<>();
+	private static List<Pokemon> Pokedex = new ArrayList<>();
+	private static List<Habitat> Habitats = new ArrayList<>();
+	private static Jugador jugador = new Jugador("", "");
+	static Boolean ejecutar = true;
+	static Boolean cargaCompleta = false;
+
 	public static void main(String[] args) throws IOException {
 		establecerPokedex("Pokedex.txt");
 		establecerAltoMando("Alto Mando.txt");
 		establecerLideres("Gimnasios.txt");
 		establecerZonas("Habitats.txt");
-		
+
 		menuInicial();
 	}
-	
+
 	public static void menuInicial() throws IOException {
 		Scanner sc = new Scanner(System.in);
 		String opcion;
 		do {
-			System.out.print("1) Continuar.\n"+ "2) Nueva Partida.\n"+ "3) Salir.\n\nIngresar opción: ");
+			System.out.print("1) Continuar.\n" + "2) Nueva Partida.\n" + "3) Salir.\n\nIngresar opción: ");
 			opcion = sc.nextLine();
-			
+
 			switch (opcion) {
 			case "1":
 				cargarPartida();
@@ -43,7 +43,7 @@ public class Main {
 				partidaNueva();
 				menuPartida();
 				break;
-			case"3":
+			case "3":
 				ejecutar = false;
 				System.out.println("Nos vemos entrenador...");
 				break;
@@ -51,29 +51,26 @@ public class Main {
 				System.out.println("\nOpción invalida.\n");
 				break;
 			}
-			
-		} while (ejecutar); sc.close();
-		
-	} //menu donde se carga partida, se crea una nueva o te vas
-	
+
+		} while (ejecutar);
+		sc.close();
+
+	} // menu donde se carga partida, se crea una nueva o te vas
+
 	public static void menuPartida() throws IOException {
 		System.out.print("\nBienvenido " + jugador.getNombre());
 		Scanner sc = new Scanner(System.in);
 		String opcion;
 		do {
-			System.out.print("\n" + jugador.getNombre()+", que deseas hacer?"+ "\n\n"+"1) Revisar equipo.\r\n"
-					+ "2) Salir a capturar.\r\n"
-					+ "3) Acceso al PC (cambiar Pokémon del equipo).\r\n"
-					+ "4) Retar un gimnasio.\r\n"
-					+ "5) Desafío al Alto Mando.\r\n"
-					+ "6) Curar Pokémon.\r\n"
-					+ "7) Guardar.\r\n"
-					+ "8) Guardar y Salir.\n\nSeleccionar opción: ");
+			System.out.print("\n" + jugador.getNombre() + ", que deseas hacer?" + "\n\n" + "1) Revisar equipo.\r\n"
+					+ "2) Salir a capturar.\r\n" + "3) Acceso al PC (cambiar Pokémon del equipo).\r\n"
+					+ "4) Retar un gimnasio.\r\n" + "5) Desafío al Alto Mando.\r\n" + "6) Curar Pokémon.\r\n"
+					+ "7) Guardar.\r\n" + "8) Guardar y Salir.\n\nSeleccionar opción: ");
 			opcion = sc.nextLine();
-			
+
 			switch (opcion) {
 			case "1":
-				jugador.team(); 
+				jugador.team();
 				break;
 			case "2":
 				elegirZona();
@@ -87,52 +84,107 @@ public class Main {
 			case "5":
 				break;
 			case "6":
-				curar();
+				jugador.curarEquipo(jugador.getEquipo());
+				// curar();
 				break;
-			case"7":
+			case "7":
 				guardar();
 				System.out.println("La partida ha sido guardada");
 				break;
-			case"8":
+			case "8":
 				ejecutar = false;
 				guardar();
 				System.out.println("Nos vemos entrenador...");
-				return ;
+				return;
 			default:
 				System.out.println("\nOpción invalida.\n");
 				break;
 			}
-			
+
 		} while (!opcion.equals("8"));
 	}
-	
-	
+
 	public static void batallaLider(LiderGym rival) {
 		List<Pokemon> equipoJugador = jugador.setearTeam();
 		List<Pokemon> equipoRival = rival.setearTeam();
-			
-		}
-	
-	public static void elegirGym(int opcion) {
-		if(opcion == 0) {
-			System.out.println("Desafia a EmmaLaArdillaRabiosa!!!11!\n");
-			batallaLider(listaLiderGym.get(opcion));
-			return;
-		} 
-		if (listaLiderGym.get(opcion-1).getEstado().equals("Sin derrotar")) {
-			System.out.println("Primero debes derrotar a " + listaLiderGym.get(opcion-1).getNombre()
-					+ "\npara enfrentarte a " + listaLiderGym.get(opcion).getNombre());
-		} else {
-			System.out.println("Ponte vio contra " + listaLiderGym.get(opcion).getNombre()+"\n");
-			batallaLider(listaLiderGym.get(opcion));
-		}
+		System.out.println("Desafiando a " + rival.getNombre() + "!!");
+		System.out.println(rival.getNombre() + " saca a "+ equipoRival.get(0).getNombre()+"!\r\n"
+				+ jugador.getNombre() +  " saca a " + equipoJugador.get(0).getNombre()+ "!") ;
+		int PokemonElegido = 0;
+		Scanner sc = new Scanner(System.in);
+		String opcion;
+		do {
+			System.out.print("Que deseas hacer?\r\n"
+					+ "1) Atacar\r\n"
+					+ "2) Cambiar de pokemon\r\n"
+					+ "3) Rendirse\r\n"
+					+ "Ingrese Opcion: ");
+			opcion = sc.nextLine();
+			switch (opcion) {
+			case "1":
+				pelea(PokemonElegido, equipoRival, equipoJugador);
+				break;
+			case "2":
+				PokemonElegido = cambiarEnPelea(PokemonElegido, equipoJugador);
+				break;
+			case "3":
+				System.out.println("Te has rendido sin problemas. . .");
+				return;
+			default:
+				System.out.println("Opcion inválida");
+				break;
+			}
+		} while (opcion != "3");
+		
+		
+		
 		
 	}
 	
+	public static int cambiarEnPelea(int pokemonActual, List<Pokemon> equipoJugador) {
+		int auxiliar = pokemonActual;
+		for (int i = 0; i < equipoJugador.size();i++) {
+			System.out.println( i + 1 +") "+ jugador.getEquipo().get(i).getPokemon().getNombre());
+		}
+		System.out.println("Escoge el pokemon para intercambiar: ");
+		pokemonActual = validarRango(1, equipoJugador.size()) -1;
+		if (auxiliar == pokemonActual) {
+			System.out.println("No hubo ningún cambio");
+			
+		} else { 
+			System.out.println("Sale " + equipoJugador.get(auxiliar).getNombre() + " y entra "
+								+ equipoJugador.get(pokemonActual).getNombre() + "!");	
+		}
+		return pokemonActual;
+	}
+	
+	public static void pelea(int pokemonActual, List<Pokemon> equipoRival, List<Pokemon> equipoJugador) {
+		int statsPokemon = jugador.getEquipo().get(pokemonActual).getPokemon().sumaStats();
+		System.out.println(jugador.getEquipo().get(pokemonActual) + " -> " + statsPokemon + " puntos");
+		System.out.println(equipoRival.get(0) + " -> " + statsPokemon + " puntos");
+		
+	}
+	
+	public static void elegirGym(int opcion) {
+		if (opcion == 0) {
+			//System.out.println("Desafia a EmmaLaArdillaRabiosa!!!11!\n");
+			batallaLider(listaLiderGym.get(opcion));
+			return;
+		}
+		if (listaLiderGym.get(opcion - 1).getEstado().equals("Sin derrotar")) {
+			System.out.println("Primero debes derrotar a " + listaLiderGym.get(opcion - 1).getNombre()
+					+ "\npara enfrentarte a " + listaLiderGym.get(opcion).getNombre());
+		} else {
+			System.out.println("Ponte vio contra " + listaLiderGym.get(opcion).getNombre() + "\n");
+			batallaLider(listaLiderGym.get(opcion));
+		}
+
+	}
+
 	public static void printGyms() {
 		System.out.println("\nA cual Lider deseas retar??\r\n");
 		for (LiderGym l : listaLiderGym) {
-			System.out.println(l.getOrden()+") " + l.getNombre() + " - " + "Estado: " + l.getEstado());
+			System.out.println(l.getOrden() + ") " + l.getNombre() + " - " + "Estado: " + l.getEstado());
 		}
 		System.out.println("9) Volver al menu.\n");
 		Scanner sc = new Scanner(System.in);
@@ -140,94 +192,112 @@ public class Main {
 		do {
 			System.out.print("Seleccionar opción: ");
 			opcion = sc.nextLine();
-			switch(opcion) {
-			case "1": elegirGym(0); break;
-			case "2": elegirGym(1); break;
-			case "3": elegirGym(2); break;
-			case "4": elegirGym(3); break;
-			case "5": elegirGym(4); break;
-			case "6": elegirGym(5); break;
-			case "7": elegirGym(6); break;
-			case "8": elegirGym(7); break;
+			switch (opcion) {
+			case "1":
+				elegirGym(0);
+				break;
+			case "2":
+				elegirGym(1);
+				break;
+			case "3":
+				elegirGym(2);
+				break;
+			case "4":
+				elegirGym(3);
+				break;
+			case "5":
+				elegirGym(4);
+				break;
+			case "6":
+				elegirGym(5);
+				break;
+			case "7":
+				elegirGym(6);
+				break;
+			case "8":
+				elegirGym(7);
+				break;
 			case "9":
 				System.out.println("Volviendo...");
 				break;
 			default:
 				break;
-			
+
 			}
 		} while (!opcion.equals("9"));
-		
-	} //printea los lideres en orden con su estado
-	
+
+	} // printea los lideres en orden con su estado
+
 	public static void establecerAltoMando(String archivo) throws FileNotFoundException {
 		Scanner lector = new Scanner(new File(archivo));
 		while (lector.hasNextLine()) {
-			 String linea = lector.nextLine();
-			 String[] partes = linea.split(";");
-			 AltoMando persona = new AltoMando(Integer.valueOf(partes[0]), partes[1]);
-			 listaAltoMando.add(persona); // Por cada linea creamos un alto mando
-			 for (int i = 2; i < 8; i++) { //Para revisar cada pokemon tipo (String de la linea)
-				 for (Pokemon pokemon : Pokedex) { //Se revisa cada Nombre de los pokemon en la pokedex
-					 if (partes[i].equals(pokemon.getNombre())) { //Se revisa si es igual el pokemon de la pokedex con el del alto mando
-						 persona.obtenerPokemon(pokemon); //Si son iguales se le añade
-					 }
-				 }
-			 }
+			String linea = lector.nextLine();
+			String[] partes = linea.split(";");
+			AltoMando persona = new AltoMando(Integer.valueOf(partes[0]), partes[1]);
+			listaAltoMando.add(persona); // Por cada linea creamos un alto mando
+			for (int i = 2; i < 8; i++) { // Para revisar cada pokemon tipo (String de la linea)
+				for (Pokemon pokemon : Pokedex) { // Se revisa cada Nombre de los pokemon en la pokedex
+					if (partes[i].equals(pokemon.getNombre())) { // Se revisa si es igual el pokemon de la pokedex con
+																	// el del alto mando
+						persona.obtenerPokemon(pokemon); // Si son iguales se le añade
+					}
+				}
+			}
 		}
-	} //se crean todos los altosMandos tipo objetos y se guardan una lista
-	
+	} // se crean todos los altosMandos tipo objetos y se guardan una lista
+
 	public static void establecerPokedex(String archivo) throws FileNotFoundException {
 		Scanner lector = new Scanner(new File(archivo));
 		while (lector.hasNextLine()) {
-			 String linea = lector.nextLine();
-			 String[] partes = linea.split(";");
-			 Pokemon poke = new Pokemon(partes[0],partes[1], Double.valueOf(partes[2]),
-						Integer.valueOf(partes[3]),Integer.valueOf(partes[4]),Integer.valueOf(partes[5]),
-						Integer.valueOf(partes[6]),Integer.valueOf(partes[7]),Integer.valueOf(partes[8]), partes[9]);
-			 Pokedex.add(poke);
-			 //Se añaden todos los pokemon del archivo a la pokedex
-		} 
-	} //se crean los pokémon y luego se guardan en una lista
-	
+			String linea = lector.nextLine();
+			String[] partes = linea.split(";");
+			Pokemon poke = new Pokemon(partes[0], partes[1], Double.valueOf(partes[2]), Integer.valueOf(partes[3]),
+					Integer.valueOf(partes[4]), Integer.valueOf(partes[5]), Integer.valueOf(partes[6]),
+					Integer.valueOf(partes[7]), Integer.valueOf(partes[8]), partes[9]);
+			Pokedex.add(poke);
+			// Se añaden todos los pokemon del archivo a la pokedex
+		}
+	} // se crean los pokémon y luego se guardan en una lista
+
 	public static void establecerLideres(String archivo) throws FileNotFoundException {
 		Scanner lector = new Scanner(new File(archivo));
 		while (lector.hasNextLine()) {
-			 String linea = lector.nextLine();
-			 String[] partes = linea.split(";");
-			 LiderGym persona = new LiderGym(Integer.valueOf(partes[0]), partes[1], partes[2]);
-			 listaLiderGym.add(persona); //Se crea un lider por cada linea
-			 for (int i = 3; i < 4 + Integer.valueOf(partes[3]); i++) { 
-				 // dependiendo de la cantidad de pokes del lider, se revisa los pokemon tipo String de la linea
-				 for (Pokemon pokemon : Pokedex) { //Se revisa toda la pokedex
-					 if (partes[i].equals(pokemon.getNombre())) { //Se revisa que coincidan los pokes
-						 persona.obtenerPokemon(pokemon); //Se añade el pokemon al Lider si coinciden
-					 }
-				 }
-			 }
-		} 
-	} //se crean todos los lideres tipo objetos y se guardan una lista
-	
+			String linea = lector.nextLine();
+			String[] partes = linea.split(";");
+			LiderGym persona = new LiderGym(Integer.valueOf(partes[0]), partes[1], partes[2]);
+			listaLiderGym.add(persona); // Se crea un lider por cada linea
+			for (int i = 3; i < 4 + Integer.valueOf(partes[3]); i++) {
+				// dependiendo de la cantidad de pokes del lider, se revisa los pokemon tipo
+				// String de la linea
+				for (Pokemon pokemon : Pokedex) { // Se revisa toda la pokedex
+					if (partes[i].equals(pokemon.getNombre())) { // Se revisa que coincidan los pokes
+						persona.obtenerPokemon(pokemon); // Se añade el pokemon al Lider si coinciden
+					}
+				}
+			}
+		}
+	} // se crean todos los lideres tipo objetos y se guardan una lista
+
 	public static void establecerZonas(String archivo) throws FileNotFoundException {
 		Scanner lector = new Scanner(new File(archivo));
-			while (lector.hasNextLine()) {
-				String linea = lector.nextLine();
-				Habitat h = new Habitat(linea);
-				Habitats.add(h);
-				for (Pokemon p : Pokedex) {
-					if (linea.equals(p.getHabitad())) {
-						h.agregarPokemon(p);
-				 }
-			 } 
-		} 
-	} //se crean todos los habitats con sus pokémon correspondientes en una lista
-	
+		while (lector.hasNextLine()) {
+			String linea = lector.nextLine();
+			Habitat h = new Habitat(linea);
+			Habitats.add(h);
+			for (Pokemon p : Pokedex) {
+				if (linea.equals(p.getHabitad())) {
+					h.agregarPokemon(p);
+				}
+			}
+		}
+	} // se crean todos los habitats con sus pokémon correspondientes en una lista
+
 	public static void pc() {
 		Scanner sc = new Scanner(System.in);
 		int i = 1;
 		for (PokemonJugador p : jugador.getEquipo()) {
 			Pokemon mostrar = p.getPokemon();
-			System.out.println(i+") "+mostrar.getNombre());
+			System.out.println(i + ") " + mostrar.getNombre());
 			i++;
 		}
 		String opcion;
@@ -236,9 +306,8 @@ public class Main {
 			opcion = sc.nextLine();
 			switch (opcion) {
 			case "1":
-				if (jugador.getEquipo().size() < 6) { 
-					System.out.println("\nNo tienes más de 6 pokémon,"
-							+ "\nno puedes cambiar el equipo");
+				if (jugador.getEquipo().size() < 6) {
+					System.out.println("\nNo tienes más de 6 pokémon," + "\nno puedes cambiar el equipo");
 					break;
 				}
 				cambiarPokemon();
@@ -247,54 +316,48 @@ public class Main {
 				System.out.println("\nVolviendo al menu...\n");
 				break;
 			}
-			
-		} while (!opcion.equals("1") && !opcion.equals("2")); 
-		
-	} // se muestran todos los pokémon del jugador y se le pregunta que si va a cambiar el equipo
-	
+
+		} while (!opcion.equals("1") && !opcion.equals("2"));
+
+	} // se muestran todos los pokémon del jugador y se le pregunta que si va a
+		// cambiar el equipo
+
 	public static void cambiarPokemon() {
 		System.out.print("Elige quien va a salir del equipo: ");
 		int sacar = validarRango(1, 6) - 1;
 		System.out.print("Elige quien va a entrar al equipo: ");
 		int meter = validarRango(7, jugador.getEquipo().size()) - 1;
-		System.out.println(jugador.getEquipo().get(sacar).getPokemon().getNombre() + 
-		" salio del equipo por " + jugador.getEquipo().get(meter).getPokemon().getNombre());
+		System.out.println(jugador.getEquipo().get(sacar).getPokemon().getNombre() + " salio del equipo por "
+				+ jugador.getEquipo().get(meter).getPokemon().getNombre());
 		jugador.cambiarPokes(meter, sacar);
-	} // se usa validar rango para elegir un poke del equipo y uno del pc, luego se llama a cambiarPoke en Jugador para intercambialos
-	
-	public static int validarRango(int minimo,int Maximo) {
-	    Scanner sc = new Scanner(System.in);
-	    int numero = -1;
-	    while (true) {
-	        if (sc.hasNextInt()) {
-	            numero = sc.nextInt();
-	            if (numero >= minimo && numero <= Maximo) {
-	                return numero;
-	            } else {
-	                System.out.print("Pokémon fuera de rango: ");
-	            }
-	        } else {
-	            System.out.print("Debes ingresar un número: ");
-	            sc.next();
-	        } 
-	    } 
-	} //validar que se elija bien el numero entre el rango que se le da a la funcion
-	
+	} // se usa validar rango para elegir un poke del equipo y uno del pc, luego se
+		// llama a cambiarPoke en Jugador para intercambialos
+
+	public static int validarRango(int minimo, int Maximo) {
+		Scanner sc = new Scanner(System.in);
+		int numero = -1;
+		while (true) {
+			if (sc.hasNextInt()) {
+				numero = sc.nextInt();
+				if (numero >= minimo && numero <= Maximo) {
+					return numero;
+				} else {
+					System.out.print("Pokémon fuera de rango: ");
+				}
+			} else {
+				System.out.print("Debes ingresar un número: ");
+				sc.next();
+			}
+		}
+	} // validar que se elija bien el numero entre el rango que se le da a la funcion
+
 	public static void elegirZona() {
 		Scanner sc = new Scanner(System.in);
 		String opcion;
 		do {
-			System.out.print("\nDonde deseas ir a explorar?\r\n"
-				+ "\r\n"
-				+ "Zonas disponibles:\r\n"
-				+ "\r\n"
-				+ "1) Lago\r\n"
-				+ "2) Cueva\r\n"
-				+ "3) Montaña\r\n"
-				+ "4) Bosque\r\n"
-				+ "5) Prado\r\n"
-				+ "6) Mar\r\n"
-				+ "7) Volver al menu.\n\nElección: ");	
+			System.out.print("\nDonde deseas ir a explorar?\r\n" + "\r\n" + "Zonas disponibles:\r\n" + "\r\n"
+					+ "1) Lago\r\n" + "2) Cueva\r\n" + "3) Montaña\r\n" + "4) Bosque\r\n" + "5) Prado\r\n"
+					+ "6) Mar\r\n" + "7) Volver al menu.\n\nElección: ");
 			opcion = sc.nextLine();
 			switch (opcion) {
 			case "1":
@@ -313,21 +376,21 @@ public class Main {
 				capturar(Habitats.get(4));
 				return;
 			case "6":
-				capturar(Habitats.get(5));	
+				capturar(Habitats.get(5));
 				return;
 			case "7":
 				break;
 			default:
 				System.out.println("Elección incorrecta, vuelve a intentarlo.");
 			}
-			
+
 		} while (!opcion.equals("7"));
-	} //un switch para elegir la zona, y segun la que se elegi, se llama a capturar()
-	
+	} // un switch para elegir la zona, y segun la que se elegi, se llama a capturar()
+
 	public static void capturar(Habitat habitat) {
 		Pokemon p = habitat.obtenerRandom();
 		Scanner sc = new Scanner(System.in);
-		System.out.println("\nOh!! Ha aparecido un increible " +p.getNombre()+"\n\nQue deseas hacer?");
+		System.out.println("\nOh!! Ha aparecido un increible " + p.getNombre() + "\n\nQue deseas hacer?");
 		String opcion;
 		do {
 			System.out.print("\n1) Capturar\n2) Huir\n\nOpción: ");
@@ -340,72 +403,74 @@ public class Main {
 						return;
 					}
 				}
-				jugador.obtenerPokemon(p,"Vivo");
-				System.out.println("\n"+p.getNombre()+" capturado con exito!!\n");
-				System.out.println(p.getNombre()+" ha sido agregado a tu equipo!");
+				jugador.obtenerPokemon(p, "Vivo");
+				System.out.println("\n" + p.getNombre() + " capturado con exito!!\n");
+				System.out.println(p.getNombre() + " ha sido agregado a tu equipo!");
 				break;
 			case "2":
 				System.out.println("\nYou gotta away safely.");
 				break;
 			}
-			
+
 		} while (!opcion.equals("1") && !opcion.equals("2"));
-		
-		
-	} //se elegi un pokemon random y pregunta si lo que quieres capturar o no, se añade a la lista de pokemon del jugador, no se pueden capturar repetidos
-	
+
+	} // se elegi un pokemon random y pregunta si lo que quieres capturar o no, se
+		// añade a la lista de pokemon del jugador, no se pueden capturar repetidos
+
 	public static void curar() {
 		for (PokemonJugador p : jugador.getEquipo()) {
-			if (p.getEstado().equals("Debilitado")) { //si su estado es muerto se hace vivo
+			if (p.getEstado().equals("Debilitado")) { // si su estado es muerto se hace vivo
 				p.setEstado("Vivo");
 				System.out.println("\nTodos los pokemons fueron curados");
 			}
 		}
-	} //se revisan los objetos pokemonjugador como p, desde el equipo del jugador
-	
+	} // se revisan los objetos pokemonjugador como p, desde el equipo del jugador
+
 	public static void guardar() throws IOException {
 		try (BufferedWriter reescritor = new BufferedWriter(new FileWriter("Registros.txt"))) {
-			reescritor.write(jugador.getNombre()+";"+jugador.getMedallas());
-			reescritor.newLine(); //escribir el nombre;medellas
+			reescritor.write(jugador.getNombre() + ";" + jugador.getMedallas());
+			reescritor.newLine(); // escribir el nombre;medellas
 			for (PokemonJugador p : jugador.getEquipo()) {
-				reescritor.write(p.getPokemon().getNombre()+";"+p.getEstado());
-				reescritor.newLine(); //se recorren todo el equipo y se escribe pokemon;estado
+				reescritor.write(p.getPokemon().getNombre() + ";" + p.getEstado());
+				reescritor.newLine(); // se recorren todo el equipo y se escribe pokemon;estado
 			}
 		}
-	} //reescribe el archivo con el nombre, medallas y pokemon del jugador, junto al estado
-	
+	} // reescribe el archivo con el nombre, medallas y pokemon del jugador, junto al
+		// estado
+
 	public static void partidaNueva() throws IOException {
-		 Scanner sc = new Scanner(System.in);
-			System.out.print("\nIngrese su apodo de jugador: ");
-			String apodo = sc.nextLine();
-		 try (BufferedWriter reescritor = new BufferedWriter(new FileWriter("Registros.txt"))) {
-			 reescritor.write(apodo+";"+"none");
-			 jugador.setNombre(apodo);
-			 jugador.setMedallas("none");
-		 }
-	 } //se pregunta nuevo apodo y se reescribe el archivo, queda: ("apodo";"none")
-	 
+		Scanner sc = new Scanner(System.in);
+		System.out.print("\nIngrese su apodo de jugador: ");
+		String apodo = sc.nextLine();
+		try (BufferedWriter reescritor = new BufferedWriter(new FileWriter("Registros.txt"))) {
+			reescritor.write(apodo + ";" + "none");
+			jugador.setNombre(apodo);
+			jugador.setMedallas("none");
+		}
+	} // se pregunta nuevo apodo y se reescribe el archivo, queda: ("apodo";"none")
+
 	public static void cargarPartida() throws IOException {
-		 Scanner lector = new Scanner(new File("Registros.txt"));
-		 
-		 int primeraLinea = 0;
-		 while (lector.hasNextLine()) {
-			 String linea = lector.nextLine();
-			 String[] partes = linea.split(";");
-			 if (primeraLinea == 0) {
-			 jugador.setNombre(partes[0]);
-			 jugador.setMedallas(partes[1]);
-			 primeraLinea = 1;
-			 }
-			 for (Pokemon pokemon : Pokedex) { 
-				if (partes[0].equals(pokemon.getNombre())) { 
+		Scanner lector = new Scanner(new File("Registros.txt"));
+
+		int primeraLinea = 0;
+		while (lector.hasNextLine()) {
+			String linea = lector.nextLine();
+			String[] partes = linea.split(";");
+			if (primeraLinea == 0) {
+				jugador.setNombre(partes[0]);
+				jugador.setMedallas(partes[1]);
+				primeraLinea = 1;
+			}
+			for (Pokemon pokemon : Pokedex) {
+				if (partes[0].equals(pokemon.getNombre())) {
 					if (partes[1].equals("Debilitado")) {
-						jugador.obtenerPokemon(pokemon,"Debilitado");
-					} else jugador.obtenerPokemon(pokemon,"Vivo");
-				
+						jugador.obtenerPokemon(pokemon, "Debilitado");
+					} else
+						jugador.obtenerPokemon(pokemon, "Vivo");
+
 				}
 			}
 		}
-	} //se cargan los datos de registros.txt, se sobresciben los datos del objeto "jugador"
+	} // se cargan los datos de registros.txt, se sobresciben los datos del objeto
+		// "jugador"
 }
-

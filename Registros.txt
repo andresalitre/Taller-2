@@ -1,10 +1,1 @@
-matias;none
-Seismitoad;Vivo
-Tentacruel;Vivo
-Froslass;Vivo
-Excadrill;Vivo
-Garganacl;Vivo
-Psyduck;Vivo
-Whiscash;Vivo
-Trevenant;Vivo
-Hydrapple;Vivo
+2;none

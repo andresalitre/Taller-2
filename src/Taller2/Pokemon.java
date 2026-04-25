@@ -38,6 +38,7 @@ public class Pokemon {
 	public String getHabitad() {
 		return habitad;
 	}
+	
 
 	public double getAparicion() {
 		return aparicion;
@@ -71,6 +72,13 @@ public class Pokemon {
 		return tipo;
 	}
 	
+	public double atacar(String tipoEnemigo) {
+		double dañofinal = sumaStats()*TablaTipos[];
+		
+		return dañofinal;
+		
+		
+	}
 	
 	public int sumaStats() {
 		return hp + atk + spAtk + def + spDef + spd;
