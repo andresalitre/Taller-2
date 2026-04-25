@@ -72,13 +72,13 @@ public class Pokemon {
 		return tipo;
 	}
 	
-	public double atacar(String tipoEnemigo) {
+	/*public double atacar(String tipoEnemigo) {
 		double dañofinal = sumaStats()*TablaTipos[];
 		
 		return dañofinal;
 		
 		
-	}
+	}*/
 	
 	public int sumaStats() {
 		return hp + atk + spAtk + def + spDef + spd;

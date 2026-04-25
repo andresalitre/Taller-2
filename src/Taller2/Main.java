@@ -109,56 +109,58 @@ public class Main {
 		List<Pokemon> equipoRival = rival.setearTeam();
 		System.out.println("Desafiando a " + rival.getNombre() + "!!");
 		System.out.println(rival.getNombre() + " saca a "+ equipoRival.get(0).getNombre()+"!\r\n"
-				+ jugador.getNombre() +  " saca a " + equipoJugador.get(0).getNombre()+ "!") ;
+				+ jugador.getNombre() +  " saca a " + jugador.getEquipo().get(0).getPokemon().getNombre()+ "!") ;
 		int PokemonElegido = 0;
 		Scanner sc = new Scanner(System.in);
 		String opcion;
+	
 		do {
 			System.out.print("Que deseas hacer?\r\n"
-					+ "1) Atacar\r\n"
-					+ "2) Cambiar de pokemon\r\n"
-					+ "3) Rendirse\r\n"
-					+ "Ingrese Opcion: ");
+						+ "1) Atacar\r\n"
+						+ "2) Cambiar de pokemon\r\n"
+						+ "3) Rendirse\r\n"
+						+ "Ingrese Opcion: ");
 			opcion = sc.nextLine();
 			switch (opcion) {
 			case "1":
-				pelea(PokemonElegido, equipoRival, equipoJugador);
+				pelea(PokemonElegido, equipoRival);
 				break;
 			case "2":
-				PokemonElegido = cambiarEnPelea(PokemonElegido, equipoJugador);
+				PokemonElegido = cambiarEnPelea(PokemonElegido);
 				break;
 			case "3":
 				System.out.println("Te has rendido sin problemas. . .");
 				return;
 			default:
 				System.out.println("Opcion inválida");
+				
 				break;
 			}
-		} while (opcion != "3");
+		} while (!opcion.equals("3"));
 		
 		
 		
 		
 	}
 	
-	public static int cambiarEnPelea(int pokemonActual, List<Pokemon> equipoJugador) {
+	public static int cambiarEnPelea(int pokemonActual) {
 		int auxiliar = pokemonActual;
-		for (int i = 0; i < equipoJugador.size();i++) {
+		for (int i = 0; i < jugador.getEquipo().size();i++) {
 			System.out.println( i + 1 +") "+ jugador.getEquipo().get(i).getPokemon().getNombre());
 		}
 		System.out.println("Escoge el pokemon para intercambiar: ");
-		pokemonActual = validarRango(1, equipoJugador.size()) -1;
+		pokemonActual = validarRango(1, jugador.getEquipo().size()) -1;
 		if (auxiliar == pokemonActual) {
 			System.out.println("No hubo ningún cambio");
 			
 		} else { 
-			System.out.println("Sale " + equipoJugador.get(auxiliar).getNombre() + " y entra "
-								+ equipoJugador.get(pokemonActual).getNombre() + "!");	
+			System.out.println("Sale " + jugador.getEquipo().get(auxiliar).getPokemon().getNombre() + " y entra "
+								+ jugador.getEquipo().get(pokemonActual).getPokemon().getNombre() + "!");	
 		}
 		return pokemonActual;
 	}
 	
-	public static void pelea(int pokemonActual, List<Pokemon> equipoRival, List<Pokemon> equipoJugador) {
+	public static void pelea(int pokemonActual, List<Pokemon> equipoRival) {
 		int statsPokemon = jugador.getEquipo().get(pokemonActual).getPokemon().sumaStats();
 		System.out.println(jugador.getEquipo().get(pokemonActual) + " -> " + statsPokemon + " puntos");
 		System.out.println(equipoRival.get(0) + " -> " + statsPokemon + " puntos");
@@ -182,49 +184,55 @@ public class Main {
 	}
 
 	public static void printGyms() {
-		System.out.println("\nA cual Lider deseas retar??\r\n");
-		for (LiderGym l : listaLiderGym) {
-			System.out.println(l.getOrden() + ") " + l.getNombre() + " - " + "Estado: " + l.getEstado());
-		}
-		System.out.println("9) Volver al menu.\n");
+		
 		Scanner sc = new Scanner(System.in);
-		String opcion;
+		String opcion = "";
 		do {
-			System.out.print("Seleccionar opción: ");
-			opcion = sc.nextLine();
-			switch (opcion) {
-			case "1":
-				elegirGym(0);
-				break;
-			case "2":
-				elegirGym(1);
-				break;
-			case "3":
-				elegirGym(2);
-				break;
-			case "4":
-				elegirGym(3);
-				break;
-			case "5":
-				elegirGym(4);
-				break;
-			case "6":
-				elegirGym(5);
-				break;
-			case "7":
-				elegirGym(6);
-				break;
-			case "8":
-				elegirGym(7);
-				break;
-			case "9":
-				System.out.println("Volviendo...");
-				break;
-			default:
-				break;
-
+			System.out.println("\nA cual Lider deseas retar??\r\n");
+			for (LiderGym l : listaLiderGym) {
+				System.out.println(l.getOrden() + ") " + l.getNombre() + " - " + "Estado: " + l.getEstado());
 			}
+			System.out.println("9) Volver al menu.\n");
+		    System.out.print("Seleccionar opción: ");
+		    opcion = sc.nextLine();
+		    switch (opcion) {
+		        case "1": 
+		        	elegirGym(0); 
+		        	break;
+		        case "2": 
+		        	elegirGym(1); 
+		        	break;
+		        case "3": 
+		        	elegirGym(2); 
+		        	break;
+		        case "4": 
+		        	elegirGym(3); 
+		        	break;
+		        case "5": 
+		        	elegirGym(4); 
+		        	break;
+		        case "6": 
+		        	elegirGym(5); 
+		        	break;
+		        case "7": 
+		        	elegirGym(6); 
+		        	break;
+		        case "8": 
+		        	elegirGym(7); 
+		        	break;
+		        case "9": 
+		        	System.out.println("Volviendo..."); 
+		        	break;
+		        default:  
+		        	System.out.println("no válida"); 
+		        	break;
+		    }
 		} while (!opcion.equals("9"));
+			
+			
+			
+		
+		//} while (!opcion.equals("9"));
 
 	} // printea los lideres en orden con su estado
 
