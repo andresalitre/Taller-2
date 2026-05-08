@@ -20,6 +20,10 @@ public class AltoMando {
 		}
 	}
 	
+	public List<Pokemon> getEquipo() {
+	    return equipo;
+	}
+	
 	public void obtenerPokemon(Pokemon p) {
 		equipo.add(p);
 	}

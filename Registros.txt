@@ -1,1 +1,10 @@
-2;none
+Satoo;none
+Ludicolo;Vivo
+GYM;EmmaLaArdillaRabiosa;Sin derrotar
+GYM;MartinNegro;Sin derrotar
+GYM;Ferran;Sin derrotar
+GYM;Branco;Sin derrotar
+GYM;Remi;Sin derrotar
+GYM;Pruno;Sin derrotar
+GYM;Dani;Sin derrotar
+GYM;Maxi;Sin derrotar
